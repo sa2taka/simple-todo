@@ -2,7 +2,7 @@
   <div class="editor">
     <v-layout justify-end text-center column fill-height class="editor" @keyup.ctrl.enter="onEnter">
       <v-flex xs10 offset-xs1>
-        <v-text-field v-model="text" hint="Press Ctrl+Enter to Add a Todo." label="Add a Todo."></v-text-field>
+        <v-text-field id="todo-text-area" v-model="text" hint="Press Ctrl+Enter to Add a Todo." label="Add a Todo."></v-text-field>
       </v-flex>
     </v-layout>
   </div>
@@ -37,6 +37,11 @@ export default {
       })
 
       this.text = ''
+    }
+  },
+  mounted () {
+    document.onclick = () => {
+      document.getElementById('todo-text-area').focus()
     }
   }
 }
