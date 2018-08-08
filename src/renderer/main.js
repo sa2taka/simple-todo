@@ -8,11 +8,11 @@ import router from './router'
 import db from './datastore'
 
 // 予め$todosを作っておく
-db.find({}, (_, docs) => {
-  Vue.prototype.$todos = docs
+db.find({}).sort({time: 1}).exec((_, docs) => {
+  self.$todos = docs
 })
 
-setTimeout(initVue, 1000)
+setTimeout(initVue, 1500)
 
 function initVue () {
   // イベント用のvueオブジェクトを作る

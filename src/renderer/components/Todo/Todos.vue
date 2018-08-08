@@ -29,8 +29,7 @@ export default {
       let db = this.$db
 
       db.remove({ _id: id }, {}, (_, numRemoved) => {
-        db.find({}, (_, docs) => {
-          console.dir(docs)
+        db.find({}).sort({time: 1}).exec((_, docs) => {
           self.$todos = docs
           self.$eventCaller.$emit('changed', docs)
         })

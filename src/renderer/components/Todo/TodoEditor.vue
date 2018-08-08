@@ -19,15 +19,18 @@ export default {
   methods: {
     onEnter () {
       let self = this
+      let now = new Date()
       const doc = {
-        text: this.text
+        text: this.text,
+        time: now.getTime()
       }
 
       let db = this.$db
+
       db.insert(doc, function (err) {
         if (err) {
         }
-        db.find({}, (_, docs) => {
+        db.find({}).sort({time: 1}).exec((_, docs) => {
           self.$todos = docs
           self.$eventCaller.$emit('changed', docs)
         })
