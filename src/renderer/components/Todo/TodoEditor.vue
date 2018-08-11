@@ -1,8 +1,8 @@
 <template>
   <div class="editor">
-    <v-layout justify-end text-center column fill-height class="editor" @keyup.ctrl.enter="onEnter">
-      <v-flex xs10 offset-xs1>
-        <v-text-field id="todo-text-area" v-model="text" hint="Press Ctrl+Enter to Add a Todo." label="Add a Todo."></v-text-field>
+    <v-layout justify-end text-center column @keyup.ctrl.enter="onEnter">
+      <v-flex xs12>
+        <v-text-field id="todo-text-area" v-model="text" placeholder="Press Ctrl+Enter to Add a Todo"></v-text-field>
       </v-flex>
     </v-layout>
   </div>
@@ -18,6 +18,9 @@ export default {
   },
   methods: {
     onEnter () {
+      if (this.text === '') {
+        return
+      }
       let self = this
       let now = new Date()
       const doc = {
@@ -49,8 +52,11 @@ export default {
 
 <style>
 .editor {
-  position: absolute;
+  position: fixed;
   width: 100%;
-  bottom: 2%;
+  top: 20px;
+  background: rgb(32, 33, 33);
+  border-radius: 20px;
+  padding: 0 3%;
 }
 </style>

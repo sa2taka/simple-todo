@@ -46,7 +46,8 @@ export default {
 <style>
 .todos {
   position: relative;
-  top: 80px;
+  top: 120px;
+  background-color: #303030;
 }
 
 </style>

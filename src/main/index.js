@@ -40,7 +40,9 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: boundsInfo.width,
     height: boundsInfo.height,
-    useContentSize: true
+    useContentSize: true,
+    'standard-window': false,
+    titleBarStyle: 'hidden-inset',
   })
 
   mainWindow.loadURL(winURL)
