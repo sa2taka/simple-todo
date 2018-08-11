@@ -17,6 +17,7 @@ export default {
   },
   mounted () {
     let self = this
+    console.log(this.$todos)
     this.todos = this.$todos
     this.$eventCaller.$on('changed', (todos) => {
       self.todos = todos

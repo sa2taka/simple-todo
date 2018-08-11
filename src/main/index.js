@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, Menu, BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import path from 'path'
 
 /**

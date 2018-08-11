@@ -9,10 +9,9 @@ import db from './datastore'
 
 // 予め$todosを作っておく
 db.find({}).sort({time: 1}).exec((_, docs) => {
-  self.$todos = docs
+  Vue.prototype.$todos = docs
+  initVue()
 })
-
-setTimeout(initVue, 1500)
 
 function initVue () {
   // イベント用のvueオブジェクトを作る
