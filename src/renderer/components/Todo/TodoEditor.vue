@@ -54,7 +54,7 @@ export default {
 .editor {
   position: fixed;
   width: 100%;
-  top: 20px;
+  top: 48px;
   background: rgb(32, 33, 33);
   border-radius: 20px;
   padding: 0 3%;
