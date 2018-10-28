@@ -42,7 +42,7 @@ function createWindow () {
     height: boundsInfo.height,
     useContentSize: true,
     'standard-window': false,
-    titleBarStyle: 'hidden-inset',
+    titleBarStyle: 'hidden-inset'
   })
 
   mainWindow.loadURL(winURL)

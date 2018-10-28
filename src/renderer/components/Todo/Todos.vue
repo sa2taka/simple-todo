@@ -1,13 +1,15 @@
 <template>
   <div class="todos">
     <v-layout align-center justify-start column fill-height>
-      <todo v-for="todo in todos" :todo="todo" @delete="onDelete"></todo>
+      <todo v-for="(todo, key) in todos" :todo="{key: key, todo: todo}"  :key="key" @delete="onDelete"></todo>
     </v-layout>
   </div>
 </template>
 
 <script>
 import Todo from '@/components/Todo/_todo.vue'
+import firebase from 'firebase'
+
 export default {
   name: 'todos',
   data () {
@@ -16,24 +18,20 @@ export default {
     }
   },
   mounted () {
-    let self = this
-    console.log(this.$todos)
-    this.todos = this.$todos
-    this.$eventCaller.$on('changed', (todos) => {
-      self.todos = todos
-      self.$forceUpdate()
+    const self = this
+    firebase.auth().onAuthStateChanged(function (user) {
+      const todosRef = firebase.database().ref('users/' + user.uid + '/todos')
+
+      todosRef.on('value', function (snapshot) {
+        self.todos = snapshot.val()
+        self.$forceUpdate()
+      })
     })
   },
   methods: {
-    onDelete (id) {
-      let self = this
-      let db = this.$db
-
-      db.remove({ _id: id }, {}, (_, numRemoved) => {
-        db.find({}).sort({time: 1}).exec((_, docs) => {
-          self.$todos = docs
-          self.$eventCaller.$emit('changed', docs)
-        })
+    onDelete (key) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        firebase.database().ref('users/' + user.uid + '/todos/' + key).remove()
       })
     }
   },
@@ -46,8 +44,7 @@ export default {
 <style>
 .todos {
   position: relative;
-  top: 100px;
+  top: 128px;
   background-color: #303030;
 }
-
 </style>

@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'todo-editor',
   data () {
@@ -18,28 +20,22 @@ export default {
   },
   methods: {
     onEnter () {
+      const self = this
       if (this.text === '') {
         return
       }
-      let self = this
-      let now = new Date()
-      const doc = {
-        text: this.text,
-        time: now.getTime()
-      }
 
-      let db = this.$db
+      firebase.auth().onAuthStateChanged(function (user) {
+        const currentUserRef = firebase.database().ref('users/' + user.uid + '/todos')
 
-      db.insert(doc, function (err) {
-        if (err) {
-        }
-        db.find({}).sort({time: 1}).exec((_, docs) => {
-          self.$todos = docs
-          self.$eventCaller.$emit('changed', docs)
+        currentUserRef.push({
+          'text': self.text,
+          'priority': 3,
+          'created_at': Date.now(),
+          'updated_at': Date.now()
         })
+        self.text = ''
       })
-
-      this.text = ''
     }
   },
   mounted () {
@@ -54,7 +50,7 @@ export default {
 .editor {
   position: fixed;
   width: 100%;
-  top: 48px;
+  top: 32px;
   background: rgb(32, 33, 33);
   border-radius: 20px;
   padding: 0 3%;
